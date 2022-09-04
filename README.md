@@ -41,6 +41,14 @@ public:
 
 ```
 
+- NOTE: To work with Semaphores in CPP #include <semaphore.h> file and following methods are available there:-
+```
+  - sem_t foo_sem;
+  - sem_init(&foo_sem, 0, 1);
+  - sem_wait(&foo_sem); 
+  - sem_post(&bar_sem); 
+```
+
 ---------
 
 
