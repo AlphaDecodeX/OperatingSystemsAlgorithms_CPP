@@ -70,9 +70,8 @@ int c = 100;
 void printThread(int i){
 	while(c--){
 		flag[i] = 1;
-		turn = i;
-
-		while(turn == i && flag[i]==1);
+		turn = !i;
+		while(turn == !i && flag[!i]==1);
 		cout<<"Thread "<<(i+1)<<" running"<<endl;		
 		flag[i] = 0;
 	}
