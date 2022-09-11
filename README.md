@@ -51,4 +51,50 @@ public:
 
 ---------
 
+### 2. Peterson's Solution to Critical Section
 
+```
+Methods used:-
+  - std::thread t(function, params);
+  - t.join();
+```
+
+```CPP
+#include <bits/stdc++.h>
+using namespace std;
+
+int flag[2] = {0,0};
+int turn;
+int c = 100;
+
+void printThread(int i){
+	while(c--){
+		flag[i] = 1;
+		turn = i;
+
+		while(turn == i && flag[i]==1);
+		cout<<"Thread "<<(i+1)<<" running"<<endl;		
+		flag[i] = 0;
+	}
+	return;
+}
+
+
+signed main(){
+	thread t1(printThread, 0);
+	thread t2(printThread, 1);
+
+	t1.join(); t2.join();
+
+	return 0;
+}
+
+```
+
+```
+Limitations:-
+  - Peterson's solution is limited to two threads only
+  - Because of turn variable, Order of threads will change according to the value of turn
+  - Solution to C.S problem should be mutually exclusive, independent (Order of threads shouldn't effect) and Bounded Waiting
+```
+-------
