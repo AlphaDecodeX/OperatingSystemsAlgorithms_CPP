@@ -99,4 +99,81 @@ Limitations:-
 ```
 -------
 
+### 3. Producer Consumer Problem in CPP (Using Semaphore)
 
+- Note:- inbuilt semaphore in cpp doesn't work sometimes and full.setCount(x) can only be done in the main(), We cant do this outside of the function.
+
+```CPP
+#include <bits/stdc++.h>
+#include <semaphore.h>
+using namespace std;
+
+class Semaphore{
+private:
+    int count;
+    mutex mtx;
+    condition_variable cv;
+public:
+    Semaphore(){}
+    Semaphore(int a): count(a){}; // used initializer list here
+
+    void setCount(int a){
+        count = a;
+    }
+
+    inline void signal(){
+        unique_lock<mutex> lock(mtx);
+        count++;
+        if(count<=0){
+            cv.notify_one();
+        }
+    }
+    inline void wait(){
+        unique_lock<mutex> lock(mtx);
+        count--;
+        while(count<0){
+            cv.wait(lock);
+        }
+    }
+};
+
+Semaphore full;
+Semaphore empty;
+mutex mtx;
+
+vector<int> buffer;
+
+void produce(){
+	do{
+		empty.wait();
+		unique_lock<mutex> lock(mtx);
+		buffer.push_back(1);
+		cout<<"Producer Pushing "<<1<<endl;
+		full.signal();
+	}while(1);
+}
+
+void consume(){
+	do{
+		full.wait();
+		unique_lock<mutex> lock(mtx);
+		buffer.pop_back();
+		cout<<"Consumer Pushing "<<1<<endl;
+		empty.signal();
+	}while(1);
+}
+
+signed main(){
+	full.setCount(0);
+	empty.setCount(100);
+
+	thread t1(produce);
+	thread t2(consume);
+
+	t1.join();t2.join();
+	return 0;
+}
+
+```
+
+-------
