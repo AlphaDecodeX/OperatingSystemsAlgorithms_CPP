@@ -96,5 +96,8 @@ Limitations:-
   - Peterson's solution is limited to two threads only
   - Because of turn variable, Order of threads will change according to the value of turn
   - Solution to C.S problem should be mutually exclusive, independent (Order of threads shouldn't effect) and Bounded Waiting
+  - Here we are able to solve the all problems but only for two threads
 ```
 -------
+
+
